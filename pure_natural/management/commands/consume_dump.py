@@ -36,6 +36,7 @@ class Command(BaseCommand):
                     instance = model()
                 model_fields = instance._meta.get_all_field_names()
                 manager_fields = []
+                fk_fields = []
                 for (field_name, field_value) in six.iteritems(item["fields"]):
 
                     if field_name not in model_fields:
@@ -47,8 +48,6 @@ class Command(BaseCommand):
 
                     field = model._meta.get_field(field_name)
                     if not isinstance(field, ManyToManyField):
-                        field = getattr(instance, field_name)
-
                         # Handle FK fields
                         field_instance = model._meta.get_field_by_name(field_name)[0]
                         if field_instance.rel:
