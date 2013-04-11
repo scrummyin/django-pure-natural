@@ -54,11 +54,9 @@ class Command(BaseCommand):
                         if field_instance.rel:
                             related_model_manager = field_instance.rel.to.objects
                             if field_value:
-                                field_valu = related_model_manager.get_by_natural_key(*field_value)
+                                field_value = related_model_manager.get_by_natural_key(*field_value)
 
-                        # Handle all other fields
-                        else:
-                            setattr(instance, field_name, field_value)
+                        setattr(instance, field_name, field_value)
                     else:
                         manager_fields.append((field_name, field_value))
 
