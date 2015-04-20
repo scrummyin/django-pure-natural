@@ -6,9 +6,13 @@ from django.db.models.loading import get_model
 from django.core.management.base import BaseCommand, CommandError
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models.fields.related import ManyToManyField
+import django
+from distutils.version import StrictVersion
 import os
 import json
 
+def django_older_than_1_6():
+    return StrictVersion(django.get_version()) < StrictVersion('1.6')
 
 class Command(BaseCommand):
     help = 'Loads data from a pure_natural dump file'
@@ -31,7 +35,11 @@ class Command(BaseCommand):
                 model = get_model(app_name, model_name)
                 self.print_out(item)
                 try:
-                    instance = model.objects.get_by_natural_key(*item['natural_key'])
+                    if django_older_than_1_6():
+                        instance = model.objects.get_by_natural_key(*item['natural_key'])
+                    else:
+                        the_natural_key = item['natural_key'][0]
+                        instance = model.objects.get_by_natural_key(*the_natural_key)
                 except ObjectDoesNotExist as ex:
                     instance = model()
                 model_fields = instance._meta.get_all_field_names()

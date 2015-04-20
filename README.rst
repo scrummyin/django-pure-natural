@@ -4,7 +4,7 @@ Installation Instructions
 
 Make changes to your settings:
 
-* Add 'enema' to INSTALLED_APPS
+* Add 'pure_natural' to INSTALLED_APPS
 
 
 =========================
