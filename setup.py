@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='django-pure-natural',
-    version='0.1.7',
+    version='0.1.8',
     description="A package that allows you to export and import django fixtures without need of pk's",
     long_description="This package adds django commands to your application that will allow you to export and import data without use of pk's ",
     license='BSD',
